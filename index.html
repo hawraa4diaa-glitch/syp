@@ -45,8 +45,8 @@ async function gather(){
   if(/EdgA?\//.test(ua))br='Edge';else if(/SamsungBrowser/.test(ua))br='Samsung Internet';else if(/CriOS|Chrome\//.test(ua))br='Chrome';else if(/FxiOS|Firefox/.test(ua))br='Firefox';else if(/Safari/.test(ua))br='Safari';
   let gpu=null;
   try{const g=document.createElement('canvas').getContext('webgl');const e=g.getExtension('WEBGL_debug_renderer_info');if(e)gpu=g.getParameter(e.UNMASKED_RENDERER_WEBGL)}catch(e){}
-  let bat=null,batT=null;
-  try{if(n.getBattery){const b=await n.getBattery();bat=Math.round(b.level*100)+'%'+(b.charging?' ⚡':'');const sec=b.charging?b.chargingTime:b.dischargingTime;if(isFinite(sec)&&sec>0){const h=Math.floor(sec/3600),m=Math.round(sec%3600/60);batT=(b.charging?'يكتمل الشحن بعد ':'ينطفي بعد ')+(h?h+' ساعة و ':'')+m+' دقيقة'}}}catch(e){}
+  let bat=null;
+  try{if(n.getBattery){const b=await n.getBattery();bat=Math.round(b.level*100)+'%'+(b.charging?' ⚡':'');}}catch(e){}
   const c=n.connection||{};
   const tz=Intl.DateTimeFormat().resolvedOptions().timeZone;
   const cmap={'Asia/Riyadh':'السعودية','Asia/Dubai':'الإمارات','Asia/Kuwait':'الكويت','Asia/Qatar':'قطر','Asia/Bahrain':'البحرين','Asia/Muscat':'عُمان','Africa/Cairo':'مصر','Asia/Amman':'الأردن'};
@@ -86,7 +86,6 @@ async function gather(){
     ['موديل جوالك',model],
     ['الكاميرا والميكروفون',(cams&&mics)?'عرفنا أنهما موجودان':null],
     ['سرعة عرض شاشتك الآن',hz+' Hz'],
-    ['كم باقي للبطارية',batT],
     ['وضع جوالك الآن',pose],
     ['بصمة جوالك (رقم يميّزه)',fp],
     ['عدد زياراتك لهذه الصفحة',visits>1?'زيارة رقم '+visits+' — عرفناك!':'أول زيارة — المرة الجاية نعرفك']
